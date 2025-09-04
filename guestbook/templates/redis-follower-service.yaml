@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redis.follower.name }}
+  labels:
+    app: {{ .Values.redis.app }}
+    role: {{ .Values.redis.follower.role }}
+    tier: {{ .Values.redis.tier }}
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: {{ .Values.redis.follower.container.ports.source }}
+  selector:
+    app: {{ .Values.redis.app }}
+    role: {{ .Values.redis.follower.role }}
+    tier: {{ .Values.redis.tier }}

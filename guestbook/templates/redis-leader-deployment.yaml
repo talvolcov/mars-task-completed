@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redis.leader.name }}
+  labels:
+    app: {{ .Values.redis.app }}
+    role: {{ .Values.redis.leader.role }}
+    tier: {{ .Values.redis.tier }}
+spec:
+  replicas: {{ .Values.redis.leader.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.redis.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redis.app }}
+        role: {{ .Values.redis.leader.role }}
+        tier: {{ .Values.redis.tier }}
+        monitor: {{ .Values.prometheusLbl }}
+    spec:
+      containers:
+      - name: {{ .Values.redis.leader.container.name }}
+        image: {{ .Values.redis.leader.container.image }}
+        resources:
+          requests:
+            cpu: {{ .Values.redis.leader.container.resources.requests.cpu }}
+            memory: {{ .Values.redis.leader.container.resources.requests.memory }}
+        ports:
+        - containerPort: {{ .Values.redis.leader.container.ports.podSource }}
+     

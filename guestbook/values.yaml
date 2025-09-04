@@ -1,0 +1,58 @@
+# redis pods definitions
+redis:
+  app: redis
+  tier: backend
+  follower: 
+    name: redis-follower
+    role: follower
+    replicas: 1
+    container:
+      name: follower
+      image: us-docker.pkg.dev/google-samples/containers/gke/gb-redis-follower:v2
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      ports:
+        source: 6379
+  leader: 
+    name: redis-leader
+    role: leader
+    replicas: 2
+    container:
+      name: leader
+      image: docker.io/redis:6.0.5
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      ports:
+        podSource: 6379
+        svcSource: 6379
+# Web app pods
+frontend: 
+  name: frontend
+  replicas: 3
+  applbl: guestbook
+  tier: frontend
+  svcPort: 80
+  containers:
+    name: php-redis
+    image: us-docker.pkg.dev/google-samples/containers/gke/gb-frontend:v5
+    envKey: GET_HOSTS_FROM
+    envValue: dns
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    ports:
+      source: 80
+
+ingress: 
+  issuer: guestbook-ingress
+  host: guestbook.local
+  tlsSecret: guestbook-tls-data
+
+prometheusPort: 8080
+prometheusLbl: monitor
+monitorPort: 80

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.name}}
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+        app: {{ .Values.frontend.applbl }}
+        tier: {{ .Values.frontend.tier }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.applbl }}
+        tier: {{ .Values.frontend.tier }}
+        monitor: {{ .Values.prometheusLbl}}
+    spec:
+      containers:
+      - name: {{ .Values.frontend.containers.name }}
+        image: {{ .Values.frontend.containers.image }}
+        env:
+        - name: {{ .Values.frontend.containers.envKey }}
+          value: {{ .Values.frontend.containers.envValue }}
+        resources:
+          requests:
+            cpu: {{ .Values.frontend.containers.resources.requests.cpu }}
+            memory: {{ .Values.frontend.containers.resources.requests.memory }}
+        ports:
+        - containerPort: {{ .Values.frontend.containers.ports.source }}
