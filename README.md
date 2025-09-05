@@ -37,7 +37,7 @@ The following folders are located in the repository:<br/>
 <br/>
  <h4>To enable access to the websites, the following actions need to be done:</h4>
  <ol>
- <li>To adjust context, run command <b> aws eks --region us-east-1 update-kubeconfig --name task-cluster </b></li>
+ <li>To adjust context, run command <b> aws eks --region us-east-1 update-kubeconfig --name Mars-task-cluster </b></li>
  <li>To receive the cluster URL run command</li>
 	 <b> kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0]}' </b>
  <li>Copy the URL from the result and use it in the command  <b>nslookup { result_url }</b></li>
