@@ -1,5 +1,5 @@
 <h2>Introduction:</h2>
-The repository contains the deliveries for the home task by Mars. <br/>
+The repository contains the deliveries for the home task <br/>
 The Environment is designed to be deployed on AWS and contains the following components:<br/>
 Kubernetes cluster with a guestbook application (as attached to the task), Ingress controller with Cert-manager, ArgoCD and Prometheus.<br/>
 The whole environment will be deployed by a single run of Terraform code.<br/>
